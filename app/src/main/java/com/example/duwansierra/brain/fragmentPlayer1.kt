@@ -3,14 +3,24 @@ package com.example.duwansierra.brain
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.LoaderManager
+import android.support.v4.content.AsyncTaskLoader
+import android.support.v4.content.Loader
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import kotlinx.android.synthetic.main.fragment_player_1.*
+import kotlinx.android.synthetic.main.fragment_player_1.view.*
 
-class fragmentPlayer1 : Fragment(){
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
+class fragmentPlayer1 : Fragment{
+
+    public lateinit var texto:TextView
+    public constructor(){
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,34 +28,18 @@ class fragmentPlayer1 : Fragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_player_1,container, false)
+        val view =inflater!!.inflate(R.layout.fragment_player_1,container, false)
+        texto=view.findViewById(R.id.textView)
+        return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
 
-    override fun onStart() {
-        super.onStart()
-    }
+    public fun enviarMensaje(mensaje: String){
+        texto.text="mensaje del activity:"+mensaje
+     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 
-    override fun onPause() {
-        super.onPause()
-    }
 
-    override fun onStop() {
-        super.onStop()
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
-    override fun onDetach() {
-        super.onDetach()
-    }
 }

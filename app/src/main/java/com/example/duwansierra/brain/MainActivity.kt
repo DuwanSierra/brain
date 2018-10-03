@@ -3,6 +3,7 @@ package com.example.duwansierra.brain
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         ShowFragmentPlayer1()
         ShowFragmentPlayer2()
+        this.btnPlayerTwo.setOnClickListener {
+            enviarMensaje()
+        }
 
     }
     fun ShowFragmentPlayer1(){
@@ -28,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         transactio.addToBackStack(null)
         transactio.commit()
 
-
        }
     fun ShowFragmentPlayer2(){
         val manager=supportFragmentManager
@@ -38,5 +41,12 @@ class MainActivity : AppCompatActivity() {
         transactio.addToBackStack(null)
         transactio.commit()
 
+    }
+    fun enviarMensaje(){
+        var fragment=getSupportFragmentManager().findFragmentById(R.id.fragmentPlayer1)
+        if(fragment is fragmentPlayer1){
+            var receptor=fragment
+            receptor.enviarMensaje("PERRA")
+        }
     }
 }

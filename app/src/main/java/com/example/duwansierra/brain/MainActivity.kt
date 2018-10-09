@@ -1,15 +1,30 @@
 package com.example.duwansierra.brain
 
+import android.graphics.Color
+import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(),View.OnClickListener {
+class MainActivity : AppCompatActivity(),View.OnClickListener,nivelOne.Comunicador {
+
+    override fun enviar(texto: String) {
+        enviarMensaje1(texto)
+        enviarMensaje2(texto)
+        if(texto == "AMBOS PIERDEN, REINICIANDO!"){
+            nivel= nivelOne(this)
+            nivel.execute()
+        }
+    }
+    var nivel = nivelOne(this)
     lateinit var fragmento1:Fragment
     lateinit var fragmento2:Fragment
-    var nivel:nivelOne=nivelOne()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,6 +39,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         ShowFragmentPlayer2()
         this.btnPlayerOne.setOnClickListener(this)
         this.btnPlayerTwo.setOnClickListener(this)
+        nivel.execute()
 
     }
     fun ShowFragmentPlayer1(){
@@ -46,29 +62,45 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         transactio.commit()
 
     }
-    public fun enviarMensaje1(texto: nivelOne){
+    fun enviarMensaje1(texto: String){
         var fragment=getSupportFragmentManager().findFragmentById(R.id.fragmentPlayer1)
         if(fragment is fragmentPlayer1){
             var receptor=fragment
-            receptor.enviarMensaje(texto)
+            receptor.recibirMensaje(texto)
         }
     }
-    public fun enviarMensaje2(texto: nivelOne){
+    fun enviarMensaje2(texto: String){
         var fragment=getSupportFragmentManager().findFragmentById(R.id.fragmentPlayer2)
         if(fragment is fragmentPlayer2){
             var receptor=fragment
-            receptor.enviarMensaje(texto)
+            receptor.recibirMensaje(texto)
         }
     }
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.btnPlayerOne -> {
+                if(nivel.status == AsyncTask.Status.RUNNING){
+                    nivel.ganador="Jugador uno"
+                    nivel.cancel(true)
+                    btnPlayerOne.setBackgroundColor(Color.GREEN)
+                    btnPlayerTwo.setBackgroundColor(Color.RED)
+                }
+                else{
 
-                enviarMensaje1(nivel)
+
+                }
+
             }
             R.id.btnPlayerTwo -> {
+                if(nivel.status == AsyncTask.Status.RUNNING){
+                    nivel.ganador="Jugador dos"
+                    nivel.cancel(true)
+                    btnPlayerTwo.setBackgroundColor(Color.GREEN)
+                    btnPlayerOne.setBackgroundColor(Color.RED)
+                }
+                else{
 
-                enviarMensaje2(nivel)
+                }
             }
         }
     }

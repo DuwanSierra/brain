@@ -19,6 +19,7 @@ import android.widget.TextView
 class fragmentPlayer1 : Fragment{
 
     public lateinit var layoutPrincipal:ConstraintLayout
+
     public constructor(){
 
     }
@@ -34,24 +35,18 @@ class fragmentPlayer1 : Fragment{
 
     }
 
-     fun enviarMensaje(mensaje: nivelOne){
-         var boton: Button = Button(context)
-         var texto: TextView = TextView(context)
-         boton.text= mensaje.status.toString()
-         mensaje.execute()
-         texto.text= mensaje.status.toString()
-         layoutPrincipal.addView(boton)
-         layoutPrincipal.addView(texto)
-         val params = texto.layoutParams as ConstraintLayout.LayoutParams
-         params.leftToRight = layoutPrincipal.id
-         params.topToTop = layoutPrincipal.id
-         params.bottomToBottom = layoutPrincipal.id
-         texto.requestLayout()
+     fun recibirMensaje(mensaje: String){
+             layoutPrincipal.removeAllViewsInLayout()
+             var texto: TextView = TextView(context)
+             texto.text=mensaje
+             texto.tag="TextView1"
+             layoutPrincipal.addView(texto)
+             val params = texto.layoutParams as ConstraintLayout.LayoutParams
+             params.leftToRight = layoutPrincipal.id
+             params.topToTop = layoutPrincipal.id
+             params.bottomToBottom = layoutPrincipal.id
+             params.leftToLeft=layoutPrincipal.id
+             texto.requestLayout()
 
      }
-
-
-
-
-
 }

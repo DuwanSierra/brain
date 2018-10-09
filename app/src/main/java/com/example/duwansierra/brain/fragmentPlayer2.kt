@@ -13,10 +13,6 @@ import android.widget.TextView
 
 class fragmentPlayer2 : Fragment(){
     lateinit var layoutPrincipal:ConstraintLayout
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -24,20 +20,22 @@ class fragmentPlayer2 : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_player_2, container, false)
         layoutPrincipal = view.findViewById(R.id.constraintLayout)
+
         return view
     }
 
-    fun enviarMensaje(mensaje: nivelOne){
-        var boton: Button = Button(context)
+    fun recibirMensaje(mensaje: String){
+        layoutPrincipal.removeAllViewsInLayout()
         var texto: TextView = TextView(context)
-        boton.text= mensaje.status.toString()
-        texto.text= mensaje.status.toString()
-        layoutPrincipal.addView(boton)
+        texto.text=mensaje
+        texto.tag="TextView1"
         layoutPrincipal.addView(texto)
         val params = texto.layoutParams as ConstraintLayout.LayoutParams
         params.leftToRight = layoutPrincipal.id
         params.topToTop = layoutPrincipal.id
         params.bottomToBottom = layoutPrincipal.id
+        params.leftToLeft=layoutPrincipal.id
         texto.requestLayout()
+
     }
 }

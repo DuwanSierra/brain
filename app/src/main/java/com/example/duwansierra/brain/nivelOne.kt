@@ -2,15 +2,10 @@ package com.example.duwansierra.brain
 
 
 import android.content.Context
+import android.graphics.Color
 import android.os.AsyncTask
-import android.support.constraint.ConstraintLayout
-import android.support.v4.app.Fragment
 import android.util.Log
-import android.view.View
-import android.view.ViewParent
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
+
 
 
 class nivelOne(var contexto:Context):  AsyncTask<Void, Int, Void>() {
@@ -23,7 +18,6 @@ class nivelOne(var contexto:Context):  AsyncTask<Void, Int, Void>() {
         super.onPreExecute()
         tiempoInicial=System.currentTimeMillis()
        comunicador = contexto as Comunicador
-        Log.d("PreExecute","Entro"+comunicador)
     }
 
     override fun doInBackground(vararg params: Void?): Void? {
@@ -51,10 +45,10 @@ class nivelOne(var contexto:Context):  AsyncTask<Void, Int, Void>() {
         tiempoFinal=System.currentTimeMillis()
         tiempoTotal=(tiempoFinal-tiempoInicial)
         if(tiempoTotal>9200 && tiempoTotal<9900){
-            comunicador.enviar("Ganador: "+ganador+" "+((10)-((tiempoFinal-tiempoInicial).toFloat()/1000))+" segundos")
+            comunicador.enviar("Ganador:"+ganador+" "+((10)-((tiempoFinal-tiempoInicial).toFloat()/1000))+" segundos")
         }
         else{
-            comunicador.enviar("Perdedor: "+ganador+" "+((10)-((tiempoFinal-tiempoInicial).toFloat()/1000))+" segundos")
+            comunicador.enviar("Perdedor:"+ganador+" "+((10)-((tiempoFinal-tiempoInicial).toFloat()/1000))+" segundos")
         }
 
 

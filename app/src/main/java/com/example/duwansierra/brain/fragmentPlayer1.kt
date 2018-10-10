@@ -39,6 +39,7 @@ class fragmentPlayer1 : Fragment{
              layoutPrincipal.removeAllViewsInLayout()
              var texto: TextView = TextView(context)
              texto.text=mensaje
+             texto.textSize= 32F
              texto.tag="TextView1"
              layoutPrincipal.addView(texto)
              val params = texto.layoutParams as ConstraintLayout.LayoutParams
@@ -49,4 +50,19 @@ class fragmentPlayer1 : Fragment{
              texto.requestLayout()
 
      }
+    fun recibirMensaje2(mensaje: String){
+        layoutPrincipal.removeAllViewsInLayout()
+        var datos=mensaje.split(",")
+        var texto=TextView(this.context)
+        texto.text=datos[0]
+        texto.setTextColor(datos[1].toInt())
+        texto.textSize= 32F
+        layoutPrincipal.addView(texto)
+        val params = texto.layoutParams as ConstraintLayout.LayoutParams
+        params.leftToRight = layoutPrincipal.id
+        params.topToTop = layoutPrincipal.id
+        params.bottomToBottom = layoutPrincipal.id
+        params.leftToLeft=layoutPrincipal.id
+        texto.requestLayout()
+    }
 }

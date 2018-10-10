@@ -11,17 +11,42 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(),View.OnClickListener,nivelOne.Comunicador {
+class MainActivity : AppCompatActivity(),View.OnClickListener,nivelOne.Comunicador,nivelTwo.Comunicador {
+    override fun enviar2(texto: String) {
+        enviarMensaje21(texto)
+        enviarMensaje22(texto)
+        if(texto == "AMBOS PIERDEN, REINICIANDO!"){
+            btnPlayerOne.setTextColor(Color.BLACK)
+            btnPlayerTwo.setTextColor(Color.BLACK)
+            nivel= nivelOne(this)
+            nivel.execute()
+        }
+    }
 
     override fun enviar(texto: String) {
-        enviarMensaje1(texto)
-        enviarMensaje2(texto)
+        enviarMensaje11(texto)
+        enviarMensaje12(texto)
+        var pal=texto.split(":")
+        if(pal[0].toString()=="Ganador"){
+            nivel2.execute()
+            btnPlayerOne.setTextColor(Color.BLACK)
+            btnPlayerTwo.setTextColor(Color.BLACK)
+        }
+        if(pal[0].toString()=="Perdedor"){
+            btnPlayerOne.setTextColor(Color.BLACK)
+            btnPlayerTwo.setTextColor(Color.BLACK)
+            nivel= nivelOne(this)
+            nivel.execute()
+        }
         if(texto == "AMBOS PIERDEN, REINICIANDO!"){
+            btnPlayerOne.setTextColor(Color.BLACK)
+            btnPlayerTwo.setTextColor(Color.BLACK)
             nivel= nivelOne(this)
             nivel.execute()
         }
     }
     var nivel = nivelOne(this)
+    var nivel2 = nivelTwo(this)
     lateinit var fragmento1:Fragment
     lateinit var fragmento2:Fragment
 
@@ -62,18 +87,32 @@ class MainActivity : AppCompatActivity(),View.OnClickListener,nivelOne.Comunicad
         transactio.commit()
 
     }
-    fun enviarMensaje1(texto: String){
+    fun enviarMensaje11(texto: String){
         var fragment=getSupportFragmentManager().findFragmentById(R.id.fragmentPlayer1)
         if(fragment is fragmentPlayer1){
             var receptor=fragment
             receptor.recibirMensaje(texto)
         }
     }
-    fun enviarMensaje2(texto: String){
+    fun enviarMensaje12(texto: String){
         var fragment=getSupportFragmentManager().findFragmentById(R.id.fragmentPlayer2)
         if(fragment is fragmentPlayer2){
             var receptor=fragment
             receptor.recibirMensaje(texto)
+        }
+    }
+    fun enviarMensaje21(texto: String){
+        var fragment=getSupportFragmentManager().findFragmentById(R.id.fragmentPlayer1)
+        if(fragment is fragmentPlayer1){
+            var receptor=fragment
+            receptor.recibirMensaje2(texto)
+        }
+    }
+    fun enviarMensaje22(texto: String){
+        var fragment=getSupportFragmentManager().findFragmentById(R.id.fragmentPlayer2)
+        if(fragment is fragmentPlayer2){
+            var receptor=fragment
+            receptor.recibirMensaje2(texto)
         }
     }
     override fun onClick(v: View?) {
@@ -82,24 +121,30 @@ class MainActivity : AppCompatActivity(),View.OnClickListener,nivelOne.Comunicad
                 if(nivel.status == AsyncTask.Status.RUNNING){
                     nivel.ganador="Jugador uno"
                     nivel.cancel(true)
-                    btnPlayerOne.setBackgroundColor(Color.GREEN)
-                    btnPlayerTwo.setBackgroundColor(Color.RED)
+                    btnPlayerOne.setTextColor(Color.GREEN)
+                    btnPlayerTwo.setTextColor(Color.RED)
                 }
-                else{
-
-
+                else if(nivel2.status == AsyncTask.Status.RUNNING){
+                    nivel2.ganador="Jugador uno"
+                    nivel2.cancel(true)
+                    btnPlayerOne.setTextColor(Color.GREEN)
+                    btnPlayerTwo.setTextColor(Color.RED)
                 }
+
 
             }
             R.id.btnPlayerTwo -> {
                 if(nivel.status == AsyncTask.Status.RUNNING){
                     nivel.ganador="Jugador dos"
                     nivel.cancel(true)
-                    btnPlayerTwo.setBackgroundColor(Color.GREEN)
-                    btnPlayerOne.setBackgroundColor(Color.RED)
+                    btnPlayerTwo.setTextColor(Color.GREEN)
+                    btnPlayerOne.setTextColor(Color.RED)
                 }
-                else{
-
+                else if(nivel2.status == AsyncTask.Status.RUNNING){
+                    nivel2.ganador="Jugador dos"
+                    nivel2.cancel(true)
+                    btnPlayerTwo.setTextColor(Color.GREEN)
+                    btnPlayerOne.setTextColor(Color.RED)
                 }
             }
         }

@@ -1,14 +1,12 @@
 package com.example.duwansierra.brain
 
-import android.content.Context
-import android.os.AsyncTask
+
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 
 class fragmentPlayer2 : Fragment(){
@@ -28,11 +26,11 @@ class fragmentPlayer2 : Fragment(){
         layoutPrincipal.removeAllViewsInLayout()
         var texto: TextView = TextView(context)
         texto.text=mensaje
-        texto.textSize= 32F
+        texto.textSize= 38F
         texto.tag="TextView1"
         layoutPrincipal.addView(texto)
         val params = texto.layoutParams as ConstraintLayout.LayoutParams
-        params.leftToRight = layoutPrincipal.id
+        params.rightToRight = layoutPrincipal.id
         params.topToTop = layoutPrincipal.id
         params.bottomToBottom = layoutPrincipal.id
         params.leftToLeft=layoutPrincipal.id
@@ -45,10 +43,10 @@ class fragmentPlayer2 : Fragment(){
         var texto=TextView(this.context)
         texto.text=datos[0]
         texto.setTextColor(datos[1].toInt())
-        texto.textSize= 32F
+        texto.textSize= 38F
         layoutPrincipal.addView(texto)
         val params = texto.layoutParams as ConstraintLayout.LayoutParams
-        params.leftToRight = layoutPrincipal.id
+        params.rightToRight = layoutPrincipal.id
         params.topToTop = layoutPrincipal.id
         params.bottomToBottom = layoutPrincipal.id
         params.leftToLeft=layoutPrincipal.id
